@@ -31,10 +31,14 @@ class CalculateSuicideText(Resource):
         text = data['content']
         username = data['username']
         suicide_rate = analyze_text(text)
+        isSucicide=False
+        if(suicide_rate[0]["label"]=="LABEL_1" and suicide_rate[0]["score"]>95):
+            isSucicide=True
         fullPost = {
             "content": text,
             "username": username,
-            "suicide_rate": suicide_rate
+            "suicide_rate": suicide_rate,
+            "isSucicide": isSucicide,
         }
 
         posts.append(fullPost)
