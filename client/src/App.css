@@ -1,0 +1,93 @@
+/* עיצוב הכללי של הדף */
+.container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+}
+
+.left-side {
+  flex: 1; /* כל צד תופס חצי מהעמוד */
+  padding: 20px;
+  border-right: 2px solid #ccc;
+  background-color: #ffcccc; /* צבע אדום קל להדגשה של פוסטים פוגעניים */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* מאפשר פיזור אחיד של האלמנטים */
+}
+
+.right-side {
+  flex: 1; /* כל צד תופס חצי מהעמוד */
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f5f5f5; /* רקע ניטרלי עבור ההתראות */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* מציג את ההתראות מלמעלה */
+}
+
+.input-text {
+  width: 90%;
+  height: 70%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.post-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #d9534f; /* אדום כהה לכפתור, כדי להדגיש את חומרת הפוסט */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.post-button:hover {
+  background-color: #c9302c; /* צבע כפתור כהה יותר בעת ריחוף */
+}
+
+/* עיצוב כרטיסי ההתראות בצד ימין */
+.message-card {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #d9534f; /* גבול אדום כהה להדגשת ההתראה */
+  border-radius: 5px;
+  background-color: #fff3f3; /* צבע רקע בהיר לפוסט פוגעני */
+}
+
+.message-card h4 {
+  margin: 0;
+  font-size: 14px;
+  color: #d9534f; /* צבע אדום כהה לכותרת */
+}
+
+.message-card p {
+  font-size: 16px;
+  color: #333;
+}
+
+.message-card .warning {
+  font-size: 18px;
+  color: #c9302c; /* צבע אדום כהה להתראה */
+  font-weight: bold;
+}
+
+.message-card .action-button {
+  margin-top: 10px;
+  padding: 8px 15px;
+  background-color: #f0ad4e; /* צבע צהוב עבור כפתור פעולה */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.message-card .action-button:hover {
+  background-color: #ec971f; /* צבע כהה יותר בעת ריחוף */
+}
