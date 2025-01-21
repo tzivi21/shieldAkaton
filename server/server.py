@@ -1,22 +1,38 @@
 from flask import Flask, request
 from flask_restx import Api, Resource, fields, Namespace
-from flask_cors import CORS  # ייבוא flask_cors
+from flask_cors import CORS
 
 from suicide import analyze_text
 
 app = Flask(__name__)
-CORS(app)  # הפעלת CORS לכל הבקשות
+
+# Enable CORS globally for all routes (if needed)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+# Specific CORS configurations for the routes
+CORS(app, resources={r"/default/calculateSuicidePost": {
+    "origins": "https://www.facebook.com",
+    "methods": ["POST"],
+    "allow_headers": ["Content-Type"]  # Allow Content-Type header
+}})
+
+CORS(app, resources={r"/default/getAllPosts": {
+    "origins": "https://www.facebook.com",
+    "methods": ["GET"],
+    "allow_headers": ["Content-Type"]  # Allow Content-Type header
+}})
+
 posts = []
 
 api = Api(app, title="Double Text API", description="API שמכפל טקסט שנשלח ב-POST")
 
-# הגדרת namespace
+# Define namespace
 ns = Namespace('default', description='Default namespace')
 api.add_namespace(ns)
 
-# הגדרת המודל ל-Swagger
+# Define the Swagger model
 text_model = ns.model('TextModel', {
-    'text': fields.String(required=True, description='הטקסט להכפלה'),
+    'content': fields.String(required=True, description='הטקסט להכפלה'),
     'username': fields.String(required=True, description='שם משתמש')
 })
 
@@ -30,10 +46,12 @@ class CalculateSuicideText(Resource):
             return {"error": "Missing 'content' or 'username' in request body"}, 400
         text = data['content']
         username = data['username']
+        if(any(post["username"] == username for post in posts) and any(post["content"] == text for post in posts)):
+            return {"error": "Post already exists"}, 400
         suicide_rate = analyze_text(text)
-        isSucicide=False
-        if(suicide_rate[0]["label"]=="LABEL_1" and suicide_rate[0]["score"]>95):
-            isSucicide=True
+        isSucicide = False
+        if suicide_rate[0]["label"] == "LABEL_1" and suicide_rate[0]["score"]*100 > 95:
+            isSucicide = True
         fullPost = {
             "content": text,
             "username": username,

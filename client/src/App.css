@@ -1,93 +1,53 @@
-/* עיצוב הכללי של הדף */
 .container {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  height: 100vh;
-  margin: 0;
-}
-
-.left-side {
-  flex: 1; /* כל צד תופס חצי מהעמוד */
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9 ;
   padding: 20px;
-  border-right: 2px solid #ccc;
-  background-color: #ffcccc; /* צבע אדום קל להדגשה של פוסטים פוגעניים */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* מאפשר פיזור אחיד של האלמנטים */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.right-side {
-  flex: 1; /* כל צד תופס חצי מהעמוד */
-  padding: 20px;
-  overflow-y: auto;
-  background-color: #f5f5f5; /* רקע ניטרלי עבור ההתראות */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* מציג את ההתראות מלמעלה */
-}
-
-.input-text {
-  width: 90%;
-  height: 70%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.post-button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: #d9534f; /* אדום כהה לכפתור, כדי להדגיש את חומרת הפוסט */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.post-button:hover {
-  background-color: #c9302c; /* צבע כפתור כהה יותר בעת ריחוף */
-}
-
-/* עיצוב כרטיסי ההתראות בצד ימין */
-.message-card {
-  margin-bottom: 20px;
-  padding: 15px;
-  border: 1px solid #d9534f; /* גבול אדום כהה להדגשת ההתראה */
-  border-radius: 5px;
-  background-color: #fff3f3; /* צבע רקע בהיר לפוסט פוגעני */
-}
-
-.message-card h4 {
-  margin: 0;
-  font-size: 14px;
-  color: #d9534f; /* צבע אדום כהה לכותרת */
-}
-
-.message-card p {
-  font-size: 16px;
+h1 {
+  text-align: center;
+  font-size: 2rem;
   color: #333;
 }
 
-.message-card .warning {
-  font-size: 18px;
-  color: #c9302c; /* צבע אדום כהה להתראה */
-  font-weight: bold;
+.posts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
 }
 
-.message-card .action-button {
-  margin-top: 10px;
-  padding: 8px 15px;
-  background-color: #f0ad4e; /* צבע צהוב עבור כפתור פעולה */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.post-card {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333;
+  transition: background-color 0.3s ease;
 }
 
-.message-card .action-button:hover {
-  background-color: #ec971f; /* צבע כהה יותר בעת ריחוף */
+.post-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.post-card p {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+.post-card:hover {
+  opacity: 0.9;
+}
+
+.green {
+  background-color: #e1f7d5 ;
+}
+
+.yellow {
+  background-color: #fff6a5 ;
+}
+
+.red {
+  background-color: #f8d7da ;
 }

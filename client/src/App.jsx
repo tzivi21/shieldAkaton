@@ -1,51 +1,50 @@
-import React, { useState } from 'react';
-import {containsWordsIgnoreCase} from "./Logic"
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
 
-function App() {
-  const [text, setText] = useState('');
-  const [messages, setMessages] = useState([]);
-  const [percentage,setPercentage]=useState(0);
+const App = () => {
+  const [posts, setPosts] = useState([]);
 
-  const handlePost = async() => {
-    let percentage =await  containsWordsIgnoreCase(text);
-    setPercentage(percentage);
-    
-    if (percentage >= 80) {
-      const newMessage = {
-        user: 'USER_NAME',
-        location: 'USER_LOCATION',
-        content: text,
-      };
-      setMessages([...messages, newMessage]);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/default/getAllPosts');
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  const getBackgroundColor = (isSuicide, score) => {
+    if (isSuicide) {
+      return score < 0.9943 ? 'rgb(222, 222, 175)' : 'rgb(231, 154, 154)';
     }
-    setText('');
+    return 'rgb(199, 231, 199)';
   };
 
   return (
     <div className="container">
-      <div className="left-side">
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="enter yout text here..."
-          className="input-text"
-        />
-        <button onClick={handlePost} className="post-button">POST</button>
-      </div>
-
-      <div className="right-side">
-        {messages.map((msg, index) => (
-          <div key={index} className="message-card">
-            <h4>{msg.user} ({msg.location})</h4>
-            <p>{msg.content}</p>
-            <p className="warning">{ `notification!! suicidal post (${percentage}%)`} .</p>
-            <button className="action-button">הפעל חקירה</button>
+      <h1>posts</h1>
+      <div className="posts-container">
+        {posts.map((post, index) => (
+          <div
+            key={index}
+            className="post-card"
+            style={{
+              backgroundColor: getBackgroundColor(post.isSucicide, post.suicide_rate[0].score)
+            }}
+          >
+            <h2>{post.username}</h2>
+            <p>{post.content}</p>
+            {post.isSucicide && <p>suicide score: {(post.suicide_rate[0].score * 100).toFixed(2)}%</p>}
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default App;
